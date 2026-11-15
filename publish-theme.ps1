@@ -106,12 +106,18 @@ function Resolve-AutoCategoryAndTags {
     $backdrop = "$($ThemeObj.BackdropType)"
     $isLight = "$($ThemeObj.BaseMode)".Equals("Light", [System.StringComparison]::OrdinalIgnoreCase)
     $hasParticles = ($ThemeObj.EnableParticleOverlay -eq $true)
+    $hasAudio = ($ThemeObj.EnableAudioReactive -eq $true)
+    $hasPointer = ($ThemeObj.EnablePointerInteraction -eq $true)
+    $audioStyle = "$($ThemeObj.AudioReactiveStyle)"
     $hasVideo = (-not [string]::IsNullOrWhiteSpace($VideoUrl)) -or $backdrop.Equals("Video", [System.StringComparison]::OrdinalIgnoreCase)
     $hasWallpaper = (-not [string]::IsNullOrWhiteSpace($WallpaperUrl)) -or $backdrop.Equals("Image", [System.StringComparison]::OrdinalIgnoreCase)
 
     $cat = $ManualCategory
     if ([string]::IsNullOrWhiteSpace($cat)) {
-        if ($hasWallpaper) {
+        if ($hasAudio -or $hasPointer) {
+            $cat = "音频交互"
+        }
+        elseif ($hasWallpaper) {
             $cat = "光学壁纸"
         }
         elseif ($hasVideo -or $backdrop.Equals("Aurora", [System.StringComparison]::OrdinalIgnoreCase) -or $backdrop.Equals("CoverFlow", [System.StringComparison]::OrdinalIgnoreCase)) {
@@ -129,6 +135,13 @@ function Resolve-AutoCategoryAndTags {
     }
 
     $tags = New-Object System.Collections.Generic.List[string]
+    if ($hasAudio) {
+        $tags.Add("音频交互")
+        if ($audioStyle.Equals("PulseRings", [System.StringComparison]::OrdinalIgnoreCase)) { $tags.Add("脉冲声环") }
+        elseif ($audioStyle.Equals("SilkWave", [System.StringComparison]::OrdinalIgnoreCase)) { $tags.Add("丝绸声波") }
+        else { $tags.Add("镜像频谱") }
+    }
+    if ($hasPointer) { $tags.Add("指针交互") }
     if ($hasWallpaper) {
         $tags.Add("光学壁纸")
         if ("$($ThemeObj.CardVisualStyle)".Equals("LiquidGlass", [System.StringComparison]::OrdinalIgnoreCase)) {
