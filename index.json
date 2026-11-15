@@ -1,0 +1,87 @@
+{
+    "FeedName":  "Alger 官方主题仓库",
+    "Items":  [
+                  {
+                      "Id":  "repo-alpine-crystal-lake",
+                      "Category":  "光学壁纸",
+                      "Tags":  [
+                                   "光学壁纸",
+                                   "液态折射",
+                                   "悬浮岛",
+                                   "浅色"
+                               ],
+                      "Downloads":  100,
+                      "SourceName":  "官方主题仓库",
+                      "PreviewImageUrl":  "",
+                      "WallpaperUrl":  "wallpapers/repo-alpine-crystal-lake.jpg",
+                      "VideoUrl":  "",
+                      "Theme":  {
+                                    "Id":  "repo-alpine-crystal-lake",
+                                    "MarketOriginId":  "repo-alpine-crystal-lake",
+                                    "Name":  "阿尔卑斯 · 晴空翠湖",
+                                    "Author":  "Official",
+                                    "Description":  "高清雪山翠湖风光搭配真光学液态玻璃折射，零模糊透出自然光影层次与悬浮灵动岛",
+                                    "BaseMode":  "Light",
+                                    "BackdropType":  "Image",
+                                    "WindowBgColorHex":  "#F2FAFF",
+                                    "BackgroundBlur":  0,
+                                    "BackgroundMaskColorHex":  "#090D16",
+                                    "BackgroundMaskOpacity":  0,
+                                    "EnableAdaptiveWallpaperText":  true,
+                                    "AccentColorHex":  "#0EA5E9",
+                                    "EnableAccentGradient":  true,
+                                    "AccentGradientEndHex":  "#10B981",
+                                    "PlayBarLayoutMode":  "FloatingIsland",
+                                    "EnablePlayBarRhythmGlow":  true,
+                                    "CardVisualStyle":  "LiquidGlass",
+                                    "CoverArtShape":  "VinylSpin",
+                                    "ButtonCornerRadius":  14,
+                                    "IsBuiltIn":  false,
+                                    "BackgroundImagePath":  ""
+                                }
+                  },
+                  {
+                      "Id":  "repo-nebula-starlight-pro",
+                      "Category":  "动态极光",
+                      "Tags":  [
+                                   "动态极光",
+                                   "Starlight",
+                                   "悬浮岛",
+                                   "深色"
+                               ],
+                      "Downloads":  100,
+                      "SourceName":  "官方主题仓库",
+                      "PreviewImageUrl":  "",
+                      "WallpaperUrl":  "",
+                      "VideoUrl":  "",
+                      "Theme":  {
+                                    "Id":  "repo-nebula-starlight-pro",
+                                    "MarketOriginId":  "repo-nebula-starlight-pro",
+                                    "Name":  "星云幻梦 · 极光呼吸",
+                                    "Author":  "Official",
+                                    "Description":  "深邃夜空下的青紫玫红三色极光呼吸与繁星闪烁特效，搭配黑胶唱盘与悬浮灵动岛",
+                                    "BaseMode":  "Dark",
+                                    "BackdropType":  "Aurora",
+                                    "WindowBgColorHex":  "#090D18",
+                                    "AuroraColor1Hex":  "#38BDF8",
+                                    "AuroraColor2Hex":  "#818CF8",
+                                    "AuroraColor3Hex":  "#F472B6",
+                                    "AuroraSpeed":  1.0,
+                                    "AuroraIntensity":  72,
+                                    "EnableParticleOverlay":  true,
+                                    "ParticleType":  "Starlight",
+                                    "ParticleDensity":  36,
+                                    "ParticleSpeed":  1.0,
+                                    "AccentColorHex":  "#38BDF8",
+                                    "EnableAccentGradient":  true,
+                                    "AccentGradientEndHex":  "#A855F7",
+                                    "PlayBarLayoutMode":  "FloatingIsland",
+                                    "EnablePlayBarRhythmGlow":  true,
+                                    "CardVisualStyle":  "FrostedGlass",
+                                    "CoverArtShape":  "VinylSpin",
+                                    "ButtonCornerRadius":  12,
+                                    "IsBuiltIn":  false
+                                }
+                  }
+              ]
+}
