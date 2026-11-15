@@ -27,7 +27,7 @@
                                     "BackgroundBlur":  0,
                                     "BackgroundMaskColorHex":  "#090D16",
                                     "BackgroundMaskOpacity":  0,
-                                    "EnableAdaptiveWallpaperText":  true,
+                                    "EnableAdaptiveWallpaperText":  false,
                                     "AccentColorHex":  "#0EA5E9",
                                     "EnableAccentGradient":  true,
                                     "AccentGradientEndHex":  "#10B981",
