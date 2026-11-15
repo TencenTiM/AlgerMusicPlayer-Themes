@@ -101,7 +101,9 @@ function Resolve-AutoCategoryAndTags {
         $ThemeObj,
         [string]$WallpaperUrl,
         [string]$VideoUrl,
-        [string]$ManualCategory
+        [string]$ManualCategory,
+        [string]$PresetCategory = "",
+        [string[]]$PresetTags = @()
     )
     $backdrop = "$($ThemeObj.BackdropType)"
     $isLight = "$($ThemeObj.BaseMode)".Equals("Light", [System.StringComparison]::OrdinalIgnoreCase)
@@ -113,6 +115,9 @@ function Resolve-AutoCategoryAndTags {
     $hasWallpaper = (-not [string]::IsNullOrWhiteSpace($WallpaperUrl)) -or $backdrop.Equals("Image", [System.StringComparison]::OrdinalIgnoreCase)
 
     $cat = $ManualCategory
+    if ([string]::IsNullOrWhiteSpace($cat) -and -not [string]::IsNullOrWhiteSpace($PresetCategory)) {
+        $cat = $PresetCategory.Trim()
+    }
     if ([string]::IsNullOrWhiteSpace($cat)) {
         if ($hasAudio -or $hasPointer) {
             $cat = "音频交互"
@@ -135,6 +140,13 @@ function Resolve-AutoCategoryAndTags {
     }
 
     $tags = New-Object System.Collections.Generic.List[string]
+    if ($null -ne $PresetTags) {
+        foreach ($pt in $PresetTags) {
+            if (-not [string]::IsNullOrWhiteSpace("$pt")) {
+                $tags.Add("$pt".Trim())
+            }
+        }
+    }
     if ($hasAudio) {
         $tags.Add("音频交互")
         if ($audioStyle.Equals("PulseRings", [System.StringComparison]::OrdinalIgnoreCase)) { $tags.Add("脉冲声环") }
@@ -165,7 +177,7 @@ function Resolve-AutoCategoryAndTags {
     }
 }
 
-$jsonFiles = @(Get-ChildItem -LiteralPath $InboxDir -Filter "*.json" -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime)
+$jsonFiles = @(Get-ChildItem -LiteralPath $InboxDir -Filter "*.json" -File -ErrorAction SilentlyContinue | Sort-Object Name)
 if ($jsonFiles.Count -eq 0) {
     Write-Host "[提示] inbox 目录内未找到待上架的 .algertheme.json / .json 主题文件。" -ForegroundColor Yellow
     Write-Host "请先在客户端导出主题包 (.algertheme.json) 放入：$InboxDir" -ForegroundColor Cyan
@@ -334,17 +346,32 @@ foreach ($jf in $jsonFiles) {
         }
     }
 
-    # 清除内嵌大字段后写入干净主题单文件 themes/<Id>.algertheme.json
+    # 读取可选市场元数据并在写入标准化主题包之前剥离
+    $presetCategory = "$($themeObj._MarketCategory)".Trim()
+    $presetTagsList = New-Object System.Collections.Generic.List[string]
+    if ($null -ne $themeObj._MarketTags) {
+        foreach ($pt in $themeObj._MarketTags) {
+            if (-not [string]::IsNullOrWhiteSpace("$pt")) {
+                $presetTagsList.Add("$pt".Trim())
+            }
+        }
+    }
+    $presetDownloads = if ($null -ne $themeObj._MarketDownloads -and "$($themeObj._MarketDownloads)" -match '^\d+$') { [int]$themeObj._MarketDownloads } else { 0 }
+
+    # 清除内嵌大字段及临时市场元数据后写入干净主题单文件 themes/<Id>.algertheme.json
     $themeObj.PSObject.Properties.Remove("EmbeddedImageBase64")
     $themeObj.PSObject.Properties.Remove("EmbeddedImageExt")
+    $themeObj.PSObject.Properties.Remove("_MarketCategory")
+    $themeObj.PSObject.Properties.Remove("_MarketTags")
+    $themeObj.PSObject.Properties.Remove("_MarketDownloads")
     $archiveThemePath = Join-Path $ThemesDir "$themeId.algertheme.json"
     Write-Utf8File -Path $archiveThemePath -Text ($themeObj | ConvertTo-Json -Depth 12)
 
-    $meta = Resolve-AutoCategoryAndTags -ThemeObj $themeObj -WallpaperUrl $wallpaperRelUrl -VideoUrl $videoRelUrl -ManualCategory $Category
+    $meta = Resolve-AutoCategoryAndTags -ThemeObj $themeObj -WallpaperUrl $wallpaperRelUrl -VideoUrl $videoRelUrl -ManualCategory $Category -PresetCategory $presetCategory -PresetTags ($presetTagsList.ToArray())
 
     # 查找是否已存在同 Id 条目
     $existingIdx = -1
-    $prevDownloads = 100
+    $prevDownloads = if ($presetDownloads -gt 0) { $presetDownloads } else { 100 }
     for ($idx = 0; $idx -lt $itemList.Count; $idx++) {
         if ("$($itemList[$idx].Id)".Equals($themeId, [System.StringComparison]::OrdinalIgnoreCase)) {
             $existingIdx = $idx

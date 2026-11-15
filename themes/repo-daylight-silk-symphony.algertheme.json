@@ -3,7 +3,7 @@
     "MarketOriginId":  "repo-daylight-silk-symphony",
     "Name":  "晴昼弦音 · 丝绸声波交响",
     "Author":  "TencenTiM",
-    "Description":  "浅色护眼晨曦极光搭配三层交织渐隐丝绸声波带，跟随旋律柔顺起舞与鼠标波峰互动，清爽通透",
+    "Description":  "冰透晴空蓝与薄荷晨雾浅色底座，多层半透明丝绸声波随音乐旋律柔美舒展起伏",
     "BaseMode":  "Light",
     "BackdropType":  "Aurora",
     "WindowBgColorHex":  "#F4F8FC",
@@ -30,5 +30,6 @@
     "AudioSensitivity":  1.15,
     "EnablePointerInteraction":  true,
     "SyncImmersiveLyricHighlight":  true,
+    "EnableAdaptiveWallpaperText":  false,
     "IsBuiltIn":  false
 }
